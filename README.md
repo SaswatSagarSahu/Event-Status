@@ -13,6 +13,23 @@ This Spring Boot-based service manages live event statuses and scores in-memory,
 - ✅ Publishes scores to Kafka with retry logic  
 - ✅ REST APIs to control and query events  
 
+---
+
+## ✅ Requirements
+
+To run this project locally, ensure you have the following installed:
+
+| Tool            | Version (Recommended)                |
+| --------------- |--------------------------------------|
+| **Java**        | 21                                   |
+| **Spring Boot** | 3.5.x or later                       |
+| **Gradle**      | 8.x (or use the wrapper)             |
+| **Lombok**      | Installed in your IDE                |
+| **Docker**      | For running Kafka via Docker Compose |
+
+### ✅ Additional Notes
+
+* **Lombok** must be enabled in your IDE (e.g., IntelliJ, Eclipse) to avoid compilation issues.
 
 
 ## 🔧 Configuration
