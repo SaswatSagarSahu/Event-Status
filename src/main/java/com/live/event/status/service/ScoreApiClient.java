@@ -8,20 +8,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-@Slf4j
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class ScoreApiClient {
 
-    private final WebClient webClient = WebClient.create();
+    private final WebClient.Builder webClientBuilder;
 
     @Value("${external.api.base-url}")
-    private String baseUrl;
+    String baseUrl;
 
     public EventScoreResponse getScore(String eventId) {
         try {
-            return webClient.get()
-                    .uri(baseUrl + "/api/v1/events/{eventId}/score", eventId)
+            return webClientBuilder.build()
+                    .get()
+                    .uri(baseUrl + "/api/v1/scores/{eventId}", eventId)
                     .retrieve()
                     .bodyToMono(EventScoreResponse.class)
                     .onErrorResume(e -> {

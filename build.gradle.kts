@@ -28,6 +28,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.kafka:spring-kafka")
+	implementation("javax.validation:validation-api:2.0.0.Final")
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -37,5 +38,6 @@ dependencies {
 }
 
 tasks.withType<Test> {
+	dependsOn("compileTestJava")
 	useJUnitPlatform()
 }

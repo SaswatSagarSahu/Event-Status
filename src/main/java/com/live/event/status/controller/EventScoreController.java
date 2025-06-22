@@ -1,28 +1,38 @@
 package com.live.event.status.controller;
 
-import com.live.event.status.domain.BaseResponse;
+import com.live.event.status.domain.EventScoreRequest;
+import com.live.event.status.domain.EventScoreResponse;
 import com.live.event.status.service.EventScoreManageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/scores")
 public class EventScoreController {
 
-    @Autowired
-    private EventScoreManageService eventScoreManageService;
+    private final EventScoreManageService scoreService;
 
-    @GetMapping("/events/{eventId}/score")
-    public ResponseEntity<?> getEventScore(@PathVariable String eventId){
-        return ResponseEntity.ok(eventScoreManageService.getEventScore(eventId));
+    public EventScoreController(EventScoreManageService scoreService) {
+        this.scoreService = scoreService;
     }
 
-    @PostMapping("/events/{eventId}/score/{score}")
-    public ResponseEntity<?> addOrUpdateEventScore(@PathVariable String eventId, @PathVariable String score){
-        eventScoreManageService.updateEventScore(eventId, score);
-        return new ResponseEntity<>(new BaseResponse(true, "Created"), HttpStatus.CREATED);
+    @GetMapping("/{eventId}")
+    public ResponseEntity<EventScoreResponse> getEventScore(@PathVariable String eventId) {
+        EventScoreResponse response = scoreService.getEventScore(eventId);
+        return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> updateEventScore(@RequestBody EventScoreRequest request) {
+        try {
+            scoreService.updateEventScore(request.getEventId(), request.getScore());
+            return ResponseEntity.ok("Event score updated.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Internal Server Error: " + e.getMessage());
+        }
+    }
+
 
 }

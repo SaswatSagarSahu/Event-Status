@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class EventStatusRequest {
+@AllArgsConstructor
+public class EventScoreRequest {
 
-    @NotBlank(message = "event Id is mandatory")
+    @NotBlank(message = "eventId is mandatory")
     private String eventId;
 
-    @NotBlank(message = "event Status is mandatory")
-    private EventStatus eventStatus;
+    @NotBlank(message = "score is mandatory")
+    private String score;
 }
